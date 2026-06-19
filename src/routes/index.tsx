@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { sendContact } from "@/lib/contact.functions";
 
 import heroBg from "@/assets/hero-bg.png.asset.json";
 import proyectoUtopiaImg from "@/assets/proyecto-utopia.png.asset.json";
@@ -243,7 +245,7 @@ function Hero() {
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a href="#contacto" className="rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-dark transition-colors">Solicitar cotización</a>
-          <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener" className="rounded-md border border-white/30 px-6 py-3 text-sm font-bold text-white hover:bg-white/10 transition-colors">WhatsApp directo</a>
+          <a href={`tel:${PHONE_PRIMARY}`} className="rounded-md border border-white/30 px-6 py-3 text-sm font-bold text-white hover:bg-white/10 transition-colors">Llamar ahora</a>
           <a href="#productos" className="rounded-md px-6 py-3 text-sm font-bold text-white/90 hover:text-white">Ver catálogo →</a>
         </div>
         <dl className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl">
@@ -480,24 +482,27 @@ function Proyectos() {
 
 function Contacto() {
   const [form, setForm] = useState({ nombre: "", empresa: "", telefono: "", email: "", producto: "", mensaje: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const sendContactFn = useServerFn(sendContact);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = `Cotización CAMR — ${form.producto || "Solicitud"}`;
-    const body = [
-      `Nombre: ${form.nombre}`,
-      `Empresa: ${form.empresa}`,
-      `Teléfono: ${form.telefono}`,
-      `Email: ${form.email}`,
-      `Producto/Servicio: ${form.producto}`,
-      ``,
-      `Mensaje:`,
-      form.mensaje,
-    ].join("\n");
-    const mailto = `mailto:${EMAIL_VENTAS}?cc=${EMAIL_ADMIN}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-    setSent(true);
+    setStatus("sending");
+    setErrorMsg("");
+    try {
+      await sendContactFn({ data: form });
+      setStatus("sent");
+      setForm({ nombre: "", empresa: "", telefono: "", email: "", producto: "", mensaje: "" });
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMsg(
+        err instanceof Error
+          ? err.message
+          : "No se pudo enviar el mensaje. Intenta más tarde o escríbenos por WhatsApp.",
+      );
+    }
   };
 
   const sendWhatsApp = () => {
@@ -578,14 +583,27 @@ function Contacto() {
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
-            <button type="submit" className="flex-1 min-w-[160px] rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-dark transition-colors">
-              Enviar por email
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="flex-1 min-w-[160px] rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-dark transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {status === "sending" ? "Enviando…" : "Enviar cotización"}
             </button>
             <button type="button" onClick={sendWhatsApp} className="flex-1 min-w-[160px] rounded-md border-2 border-primary px-6 py-3 text-sm font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors">
               Enviar por WhatsApp
             </button>
           </div>
-          {sent && <p className="mt-4 text-sm text-primary font-semibold" role="status">Abriendo tu cliente de correo…</p>}
+          {status === "sent" && (
+            <p className="mt-4 text-sm text-primary font-semibold" role="status">
+              ¡Mensaje enviado! Te responderemos a la brevedad.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="mt-4 text-sm text-destructive font-semibold" role="alert">
+              {errorMsg}
+            </p>
+          )}
         </form>
       </div>
     </section>

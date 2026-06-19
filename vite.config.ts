@@ -12,4 +12,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Build for Vercel by default when deployed there.
+  // Locally and on Lovable, Cloudflare is used unless NITRO_PRESET=vercel is set.
+  nitro: {
+    preset: process.env.NITRO_PRESET || (process.env.VERCEL ? "vercel" : undefined),
+  },
 });
