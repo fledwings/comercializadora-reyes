@@ -3,32 +3,32 @@ import { useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { sendContact } from "@/lib/contact.functions";
 
-import heroBg from "@/assets/hero-bg.png.asset.json";
-import proyectoUtopiaImg from "@/assets/proyecto-utopia.png.asset.json";
-import proyectoDosBocasImg from "@/assets/proyecto-dos-bocas.png.asset.json";
-import proyectoPinturaImg from "@/assets/proyecto-pintura.png.asset.json";
-import proyectoEdificacionImg from "@/assets/proyecto-edificacion.png.asset.json";
-import proyectoTrenMayaImg from "@/assets/proyecto-tren-maya.png.asset.json";
-
-import cementoImg from "@/assets/productos/cemento_page.jpg.asset.json";
-import morteroImg from "@/assets/productos/mortero_page.jpg.asset.json";
-import pegazulejoImg from "@/assets/productos/pegazulejo_page.jpg.asset.json";
-import calImg from "@/assets/productos/cal_page.jpg.asset.json";
-import yesoImg from "@/assets/productos/yeso_page.jpg.asset.json";
-
-import apizonadorImg from "@/assets/maquinaria/apizonador.jpg.asset.json";
-import vibrocompactadorImg from "@/assets/maquinaria/vibrocompactador.jpg.asset.json";
-import rodillosImg from "@/assets/maquinaria/rodillos.jpg.asset.json";
-import mezcladoraImg from "@/assets/maquinaria/mezcladora.jpg.asset.json";
-import allanadoraImg from "@/assets/maquinaria/allanadora.jpg.asset.json";
-import cortadoraImg from "@/assets/maquinaria/cortadora.jpg.asset.json";
-import rotomartilloImg from "@/assets/maquinaria/rotomartillo.jpg.asset.json";
-import retroexcavadoraImg from "@/assets/maquinaria/retroexcavadora.jpg.asset.json";
-import excavadoraImg from "@/assets/maquinaria/excavadora.jpg.asset.json";
-import compactadoraImg from "@/assets/maquinaria/compactadora.jpg.asset.json";
-import gruasImg from "@/assets/maquinaria/gruas.jpg.asset.json";
-import rayloaderImg from "@/assets/maquinaria/rayloader.jpg.asset.json";
-import bobcatImg from "@/assets/maquinaria/bobcat.jpg.asset.json";
+const IMG = {
+  hero: "/images/hero-bg.png",
+  cemento: "/images/cemento_page.jpg",
+  mortero: "/images/mortero_page.jpg",
+  pegazulejo: "/images/pegazulejo_page.jpg",
+  cal: "/images/cal_page.jpg",
+  yeso: "/images/yeso_page.jpg",
+  retroexcavadora: "/images/retroexcavadora.jpg",
+  excavadora: "/images/excavadora.jpg",
+  compactadora: "/images/compactadora.jpg",
+  gruas: "/images/gruas.jpg",
+  rayloader: "/images/rayloader.jpg",
+  bobcat: "/images/bobcat.jpg",
+  apizonador: "/images/apizonador.jpg",
+  vibrocompactador: "/images/vibrocompactador.jpg",
+  rodillos: "/images/rodillos.jpg",
+  mezcladora: "/images/mezcladora.jpg",
+  allanadora: "/images/allanadora.jpg",
+  cortadora: "/images/cortadora.jpg",
+  rotomartillo: "/images/rotomartillo.jpg",
+  proyectoUtopia: "/images/proyecto-utopia.png",
+  proyectoEdificacion: "/images/proyecto-edificacion.png",
+  proyectoTrenMaya: "/images/proyecto-tren-maya.png",
+  proyectoDosBocas: "/images/proyecto-dos-bocas.png",
+  proyectoPintura: "/images/proyecto-pintura.png",
+} as const;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -73,11 +73,11 @@ const PRODUCTOS = [
   {
     cat: "Cemento y Mortero",
     items: [
-      { n: "Cemento gris", d: "Holcim Fuerte EcoPlanet, Cemex Maya Extra, Cemex Tolteca Extra, Fortaleza, Cruz Azul. Bulto 50 kg o tonelada.", img: cementoImg.url },
-      { n: "Mortero", d: "Cemex Tolteca Óptimo, Cruz Azul, Fortaleza. Bulto 50 kg o tonelada.", img: morteroImg.url },
-      { n: "Pegazulejo", d: "Fortec, Cuvasa Blanco, Crest Blanco. Bulto 20 kg o tonelada.", img: pegazulejoImg.url },
-      { n: "Cal hidratada", d: "Ejido Progreso, Calidra, Procal. Bulto 25 kg o tonelada.", img: calImg.url },
-      { n: "Yeso", d: "Las Peñitas. Bulto 40 kg o tonelada.", img: yesoImg.url },
+      { n: "Cemento gris", d: "Holcim Fuerte EcoPlanet, Cemex Maya Extra, Cemex Tolteca Extra, Fortaleza, Cruz Azul. Bulto 50 kg o tonelada.", img: IMG.cemento },
+      { n: "Mortero", d: "Cemex Tolteca Óptimo, Cruz Azul, Fortaleza. Bulto 50 kg o tonelada.", img: IMG.mortero },
+      { n: "Pegazulejo", d: "Fortec, Cuvasa Blanco, Crest Blanco. Bulto 20 kg o tonelada.", img: IMG.pegazulejo },
+      { n: "Cal hidratada", d: "Ejido Progreso, Calidra, Procal. Bulto 25 kg o tonelada.", img: IMG.cal },
+      { n: "Yeso", d: "Las Peñitas. Bulto 40 kg o tonelada.", img: IMG.yeso },
     ],
   },
   {
@@ -110,19 +110,19 @@ const PRODUCTOS = [
 ];
 
 const MAQUINARIA = [
-  { n: "Retroexcavadora", t: "Maquinaria pesada", img: retroexcavadoraImg.url },
-  { n: "Excavadora", t: "Maquinaria pesada", img: excavadoraImg.url },
-  { n: "Compactadora", t: "Maquinaria pesada", img: compactadoraImg.url },
-  { n: "Grúas (National Crane)", t: "Maquinaria pesada", img: gruasImg.url },
-  { n: "Rayloader", t: "Maquinaria pesada", img: rayloaderImg.url },
-  { n: "Bobcat", t: "Maquinaria pesada", img: bobcatImg.url },
-  { n: "Apizonador", t: "Maquinaria ligera", img: apizonadorImg.url },
-  { n: "Vibrocompactador", t: "Maquinaria ligera", img: vibrocompactadorImg.url },
-  { n: "Rodillos vibratorios", t: "Maquinaria ligera (sencillo y doble)", img: rodillosImg.url },
-  { n: "Mezcladora de concreto", t: "Equipo de concreto", img: mezcladoraImg.url },
-  { n: "Allanadora", t: "Equipo de concreto", img: allanadoraImg.url },
-  { n: "Cortadora de concreto", t: "Equipo de concreto", img: cortadoraImg.url },
-  { n: "Rotomartillo DeWalt", t: "Herramienta", img: rotomartilloImg.url },
+  { n: "Retroexcavadora", t: "Maquinaria pesada", img: IMG.retroexcavadora },
+  { n: "Excavadora", t: "Maquinaria pesada", img: IMG.excavadora },
+  { n: "Compactadora", t: "Maquinaria pesada", img: IMG.compactadora },
+  { n: "Grúas (National Crane)", t: "Maquinaria pesada", img: IMG.gruas },
+  { n: "Rayloader", t: "Maquinaria pesada", img: IMG.rayloader },
+  { n: "Bobcat", t: "Maquinaria pesada", img: IMG.bobcat },
+  { n: "Apizonador", t: "Maquinaria ligera", img: IMG.apizonador },
+  { n: "Vibrocompactador", t: "Maquinaria ligera", img: IMG.vibrocompactador },
+  { n: "Rodillos vibratorios", t: "Maquinaria ligera (sencillo y doble)", img: IMG.rodillos },
+  { n: "Mezcladora de concreto", t: "Equipo de concreto", img: IMG.mezcladora },
+  { n: "Allanadora", t: "Equipo de concreto", img: IMG.allanadora },
+  { n: "Cortadora de concreto", t: "Equipo de concreto", img: IMG.cortadora },
+  { n: "Rotomartillo DeWalt", t: "Herramienta", img: IMG.rotomartillo },
 ];
 
 const SERVICIOS = [
@@ -231,7 +231,7 @@ function Hero() {
     <section className="relative overflow-hidden text-white">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg.url})` }}
+        style={{ backgroundImage: `url(${IMG.hero})` }}
         aria-hidden="true"
       />
       <div className="absolute inset-0 bg-ink/80" aria-hidden="true" />
@@ -424,7 +424,7 @@ function Proyectos() {
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${proyectoUtopiaImg.url})` }}
+                  style={{ backgroundImage: `url(${IMG.proyectoUtopia})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
@@ -434,7 +434,7 @@ function Proyectos() {
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${proyectoEdificacionImg.url})` }}
+                  style={{ backgroundImage: `url(${IMG.proyectoEdificacion})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
@@ -444,7 +444,7 @@ function Proyectos() {
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${proyectoTrenMayaImg.url})` }}
+                  style={{ backgroundImage: `url(${IMG.proyectoTrenMaya})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
@@ -454,7 +454,7 @@ function Proyectos() {
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${proyectoDosBocasImg.url})` }}
+                  style={{ backgroundImage: `url(${IMG.proyectoDosBocas})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
@@ -464,7 +464,7 @@ function Proyectos() {
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${proyectoPinturaImg.url})` }}
+                  style={{ backgroundImage: `url(${IMG.proyectoPintura})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />

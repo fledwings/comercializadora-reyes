@@ -68,8 +68,10 @@ src/
 │   └── index.tsx          # página principal (Hero, Productos, Maquinaria, etc.)
 ├── lib/
 │   └── contact.functions.ts  # server function que envía cotizaciones vía Resend
-├── assets/                # imágenes (logo, proyectos, productos, maquinaria)
 └── styles.css             # tema y tokens Tailwind v4
+
+public/
+└── images/                # imágenes estáticas listas para GitHub/Vercel
 ```
 
 ---
