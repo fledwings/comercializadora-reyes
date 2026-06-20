@@ -237,7 +237,7 @@ function Hero() {
       <div className="absolute inset-0 bg-ink/80" aria-hidden="true" />
       <div className="relative mx-auto max-w-7xl px-4 py-20 lg:py-28">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary-foreground/80">Siempre Preparados</p>
-        <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] max-w-4xl">
+        <h1 className="mt-4 text-[26px] leading-tight sm:text-4xl md:text-5xl lg:text-6xl font-black break-words max-w-4xl">
           COMERCIALIZADORA DE <span className="text-primary" style={{ color: "oklch(0.7 0.18 264)" }}>ACERO Y MATERIALES REYES</span> SA DE CV
         </h1>
         <p className="mt-6 max-w-2xl text-base sm:text-lg text-white/80">
