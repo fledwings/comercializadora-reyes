@@ -28,6 +28,7 @@ const IMG = {
   proyectoTrenMaya: "/images/proyecto-tren-maya.png",
   proyectoDosBocas: "/images/proyecto-dos-bocas.png",
   proyectoPintura: "/images/proyecto-pintura.png",
+  proyectoSureste: "/images/proyecto-sureste.jpg",
 } as const;
 
 export const Route = createFileRoute("/")({
@@ -44,7 +45,8 @@ export const Route = createFileRoute("/")({
 
 const PHONE_PRIMARY = "5561038103";
 const PHONE_SECONDARY = "5510456007";
-const WHATSAPP = "5210456007"; // sin signo, formato wa.me
+const PHONE_OFFICE_INTL = "525510456007";
+const WHATSAPP = "525510456007"; // sin signo, formato wa.me
 const EMAIL_VENTAS = "ventas1@acerosymetalesreyes.com";
 const EMAIL_ADMIN = "administracion@acerosymetalesreyes.com";
 
@@ -137,8 +139,9 @@ const PROYECTOS = [
   { n: "Centro recreativo Utopía-Libertad", d: "Suministro de materiales y concreto." },
   { n: "Edificación vertical (departamentos)", d: "Suministro de concreto." },
   { n: "Tren Maya", d: "Suministro de acero y materiales." },
-  { n: "Refinería Dos Bocas", d: "Suministro de materiales y acero." },
+  { n: "Refinería Dos a Bocas", d: "Suministro de materiales y acero." },
   { n: "Suministro de pintura a municipio", d: "Abastecimiento institucional." },
+  { n: "Suministro en el Sureste", d: "Proyecto de Desarrollo de vivienda" },
 ];
 
 function Index() {
@@ -241,7 +244,7 @@ function Hero() {
           COMERCIALIZADORA DE <span className="text-primary" style={{ color: "oklch(0.7 0.18 264)" }}>ACERO Y MATERIALES REYES</span> SA DE CV
         </h1>
         <p className="mt-6 max-w-2xl text-base sm:text-lg text-white/80">
-          Tu mejor aliado en distribución de acero, cemento, concreto, agregados, prefabricados, maquinaria y servicios para tu obra. Entregas puntuales en toda la República Mexicana.
+          Material de calidad, entrega garantizada. Sin retrasos, sin sorpresas. Distribución de acero, cemento, concreto, agregados, prefabricados, maquinaria y servicios directo a tu obra en toda la República Mexicana.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <a href="#contacto" className="rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary-dark transition-colors">Solicitar cotización</a>
@@ -266,12 +269,13 @@ function Hero() {
   );
 }
 
-function Section({ id, eyebrow, title, children, dark = false }: { id?: string; eyebrow: string; title: string; children: React.ReactNode; dark?: boolean }) {
+function Section({ id, eyebrow, title, subtitle, children, dark = false }: { id?: string; eyebrow: string; title: string; subtitle?: string; children: React.ReactNode; dark?: boolean }) {
   return (
     <section id={id} className={`py-16 lg:py-24 ${dark ? "bg-secondary" : "bg-background"}`}>
       <div className="mx-auto max-w-7xl px-4">
         <p className="text-xs font-bold uppercase tracking-[0.25em] text-primary">{eyebrow}</p>
         <h2 className="mt-3 text-3xl sm:text-4xl font-black text-ink max-w-3xl">{title}</h2>
+        {subtitle && <p className="mt-4 text-base text-muted-foreground max-w-2xl">{subtitle}</p>}
         <div className="mt-10">{children}</div>
       </div>
     </section>
@@ -280,20 +284,20 @@ function Section({ id, eyebrow, title, children, dark = false }: { id?: string; 
 
 function Nosotros() {
   return (
-    <Section id="nosotros" eyebrow="Quiénes Somos" title="Distribución de acero y materiales para tu obra, con entrega puntual.">
+    <Section id="nosotros" eyebrow="Quiénes Somos" title="La diferencia entre una obra atrasada y una obra entregada a tiempo.">
       <div className="grid gap-8 md:grid-cols-2">
         <p className="text-base text-foreground/80 leading-relaxed">
-          Somos tu mejor aliado para la distribución de una amplia variedad de aceros y materiales que tu obra requiera. Hacemos entregas puntuales en la ubicación indicada con nuestras diversas unidades, siendo eficaces en tiempo y costos, y brindando productos de alta calidad.
+          En CAMR no vendemos materiales: entregamos tranquilidad. Nuestra flota propia y red de socios comerciales garantizan que tu acero, cemento, concreto o maquinaria lleguen exactamente cuando los necesitas, sin excusas y sin costos ocultos.
         </p>
         <p className="text-base text-foreground/80 leading-relaxed">
-          Contamos con los mejores socios comerciales para abastecer cualquier requerimiento en cualquier zona de la República Mexicana. Nos comprometemos con la calidad, la atención oportuna y costos justos para fortalecer relaciones laborales duraderas.
+          Desde Cuautitlán Izcalli hasta cualquier rincón de la República, operamos con una sola promesa: cumplir. Marcas certificadas, logística ágil y atención personalizada que convierte a nuestros clientes en aliados de largo plazo.
         </p>
       </div>
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {[
-          ["Calidad garantizada", "Marcas líderes como ArcelorMittal, Cemex, Holcim, Cruz Azul, Fortaleza, DeWalt."],
-          ["Cobertura nacional", "Logística propia para entregas en cualquier punto de la República."],
-          ["Soluciones integrales", "Materiales + maquinaria + servicios bajo un mismo proveedor."],
+          ["Calidad innegociable", "ArcelorMittal, Cemex, Holcim, Cruz Azul, Fortaleza, DeWalt. Solo marcas que respaldan tu obra."],
+          ["Cobertura sin límites", "Logística propia y aliados estratégicos para entregar donde otros no llegan."],
+          ["Todo en un solo proveedor", "Materiales + maquinaria + servicios. Menos contratos, más resultados."],
         ].map(([t, d]) => (
           <div key={t} className="rounded-lg border border-border bg-card p-6">
             <div className="h-1 w-10 bg-primary mb-4" aria-hidden="true" />
@@ -325,7 +329,7 @@ function Productos() {
   const [modal, setModal] = useState<{ img: string; name: string } | null>(null);
 
   return (
-    <Section id="productos" eyebrow="Productos" title="Catálogo completo de materiales para construcción." dark>
+    <Section id="productos" eyebrow="Productos" title="Todo lo que tu obra necesita, en un solo lugar." subtitle="Solo trabajamos con marcas certificadas que garantizan resistencia, durabilidad y cumplimiento de norma. Desde acero de alta resistencia hasta concreto premezclado de clase superior, tenemos el material exacto que tu proyecto exige." dark>
       {modal && <ProductModal img={modal.img} name={modal.name} onClose={() => setModal(null)} />}
       <div className="grid gap-6 lg:grid-cols-2">
         {PRODUCTOS.map((cat) => (
@@ -366,7 +370,7 @@ function Maquinaria() {
     return acc;
   }, {});
   return (
-    <Section id="maquinaria" eyebrow="Renta de Maquinaria" title="Maquinaria ligera, pesada y equipo de concreto.">
+    <Section id="maquinaria" eyebrow="Renta de Maquinaria" title="Maquinaria lista para trabajar desde el primer día." subtitle="Contamos con equipo pesado, ligero y especializado para cada fase de la construcción. Renta con operador o sin operador, con entrega puntual a tu obra.">
       {modal && <ProductModal img={modal.img} name={modal.name} onClose={() => setModal(null)} />}
       <p className="-mt-6 mb-8 text-sm text-muted-foreground">* Sujeto a disponibilidad. Consulta tarifas y plazos.</p>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -398,7 +402,7 @@ function Maquinaria() {
 
 function Servicios() {
   return (
-    <Section id="servicios" eyebrow="Servicios" title="Mantenimiento, instalaciones y conservación." dark>
+    <Section id="servicios" eyebrow="Servicios" title="Servicios integrales que mantienen tu obra en marcha." subtitle="Más que materiales: ofrecemos soluciones integrales. Desde el retiro de escombro hasta instalaciones eléctricas e hidrosanitarias, cubrimos cada necesidad de tu proyecto." dark>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {SERVICIOS.map((s) => (
           <div key={s.n} className="rounded-lg bg-card border border-border p-6 hover:border-primary transition-colors">
@@ -412,59 +416,26 @@ function Servicios() {
 }
 
 function Proyectos() {
-  const bgIndices = new Set([0, 1, 2, 3, 4]);
-  const hasBg = (i: number) => bgIndices.has(i);
+  const bgMap: Record<number, string> = {
+    0: IMG.proyectoUtopia,
+    1: IMG.proyectoEdificacion,
+    2: IMG.proyectoTrenMaya,
+    3: IMG.proyectoDosBocas,
+    4: IMG.proyectoPintura,
+    5: IMG.proyectoSureste,
+  };
+  const hasBg = (i: number) => i in bgMap;
 
   return (
-    <Section id="proyectos" eyebrow="Proyectos" title="Confianza demostrada en obras de gran escala.">
+    <Section id="proyectos" eyebrow="Proyectos" title="Grandes obras nos respaldan. Tu proyecto está en buenas manos." subtitle="Nuestra experiencia habla por nosotros. Hemos participado en proyectos emblemáticos a nivel nacional, demostrando capacidad, confiabilidad y entrega a tiempo.">
       <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {PROYECTOS.map((p, i) => (
           <li key={p.n} className={`rounded-lg border border-border p-6 relative overflow-hidden ${hasBg(i) ? "" : "bg-card"}`}>
-            {i === 0 && (
+            {hasBg(i) && (
               <>
                 <div
                   className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${IMG.proyectoUtopia})` }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
-              </>
-            )}
-            {i === 1 && (
-              <>
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${IMG.proyectoEdificacion})` }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
-              </>
-            )}
-            {i === 2 && (
-              <>
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${IMG.proyectoTrenMaya})` }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
-              </>
-            )}
-            {i === 3 && (
-              <>
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${IMG.proyectoDosBocas})` }}
-                  aria-hidden="true"
-                />
-                <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
-              </>
-            )}
-            {i === 4 && (
-              <>
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${IMG.proyectoPintura})` }}
+                  style={{ backgroundImage: `url(${bgMap[i]})` }}
                   aria-hidden="true"
                 />
                 <div className="absolute inset-0 bg-ink/75" aria-hidden="true" />
@@ -515,13 +486,16 @@ function Contacto() {
       <div className="mx-auto max-w-7xl px-4 grid gap-12 lg:grid-cols-2">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.25em]" style={{ color: "oklch(0.7 0.18 264)" }}>Cotizaciones</p>
-          <h2 className="mt-3 text-3xl sm:text-4xl font-black">Solicita tu cotización hoy.</h2>
-          <p className="mt-4 text-white/80 max-w-md">Respondemos en horario laboral. Comparte los detalles de tu obra y te enviamos la mejor propuesta del mercado.</p>
+          <h2 className="mt-3 text-3xl sm:text-4xl font-black">Cotiza hoy y recibe respuesta en menos de 24 horas.</h2>
+          <p className="mt-4 text-white/80 max-w-md">No dejes que tu obra se detenga. Comparte los detalles y te enviamos la propuesta más competitiva del mercado, con entrega garantizada.</p>
 
           <ul className="mt-8 space-y-5 text-sm">
             <ContactItem label="Teléfonos">
               <a href={`tel:${PHONE_PRIMARY}`} className="block hover:underline">55 6103 8103</a>
               <a href={`tel:${PHONE_SECONDARY}`} className="block hover:underline">55 1045 6007</a>
+            </ContactItem>
+            <ContactItem label="Número de oficina">
+              <a href={`tel:${PHONE_OFFICE_INTL}`} className="block hover:underline">52 55 1045 6007</a>
             </ContactItem>
             <ContactItem label="Email">
               <a href={`mailto:${EMAIL_VENTAS}`} className="block hover:underline">{EMAIL_VENTAS}</a>
