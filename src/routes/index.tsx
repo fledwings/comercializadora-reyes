@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { sendContact } from "@/lib/contact.functions";
 
 const IMG = {
   hero: "/images/hero-bg.png",
@@ -455,25 +453,22 @@ function Contacto() {
   const [form, setForm] = useState({ nombre: "", empresa: "", telefono: "", email: "", producto: "", mensaje: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const sendContactFn = useServerFn(sendContact);
-
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("sending");
-    setErrorMsg("");
-    try {
-      await sendContactFn({ data: form });
-      setStatus("sent");
-      setForm({ nombre: "", empresa: "", telefono: "", email: "", producto: "", mensaje: "" });
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-      setErrorMsg(
-        err instanceof Error
-          ? err.message
-          : "No se pudo enviar el mensaje. Intenta más tarde o escríbenos por WhatsApp.",
-      );
-    }
+    const subject = `Cotización CAMR — ${form.producto || "Solicitud"}`;
+    const body = [
+      `Nombre: ${form.nombre}`,
+      `Empresa: ${form.empresa || "(no especificada)"}`,
+      `Teléfono: ${form.telefono}`,
+      `Email: ${form.email}`,
+      `Producto/Servicio: ${form.producto}`,
+      ``,
+      `Mensaje:`,
+      form.mensaje,
+    ].join("\n");
+    const mailto = `mailto:${EMAIL_VENTAS}?cc=${encodeURIComponent(EMAIL_ADMIN)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    setStatus("sent");
   };
 
   const sendWhatsApp = () => {
